@@ -1,0 +1,94 @@
+.practice-section {
+  border-bottom: 1px solid var(--line);
+}
+
+.practice-section .section-heading {
+  align-items: baseline;
+}
+
+.practice-section .section-heading :is(h2, .text-link) {
+  margin-top: 0;
+}
+
+.practice-card .project-link {
+  display: block;
+}
+
+.practice-card .card-image {
+  aspect-ratio: 16 / 9;
+  background: var(--ink);
+}
+
+.practice-card .card-image img {
+  display: block;
+  object-fit: cover;
+}
+
+.practice-card .project-link:focus-visible {
+  outline: 2px solid #8f6b00;
+  outline-offset: 5px;
+}
+
+.practice-card .project-link:is(:hover, :focus-visible) .card-arrow {
+  background: var(--yellow);
+}
+
+@media (max-width: 700px) {
+  .filters:has([data-filter="interactive"]) {
+    justify-content: flex-start;
+    column-gap: 16px;
+    row-gap: 0;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .card-arrow {
+    transition: transform .22s ease, background-color .22s ease;
+  }
+
+  .project-link:is(:hover, :focus-visible) .card-arrow {
+    transform: translate(2px, -2px);
+  }
+
+  .feature-cta span,
+  .text-link span {
+    display: inline-block;
+    transition: transform .22s ease;
+  }
+
+  :is(.feature-cta, .text-link):is(:hover, :focus-visible) span {
+    transform: translateX(4px);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .practice-card .card-image {
+    transform: perspective(950px) rotateX(var(--practice-x, 0deg)) rotateY(var(--practice-y, 0deg));
+    transition: transform .42s cubic-bezier(.2,.75,.3,1), box-shadow .24s ease;
+  }
+
+  .practice-card .is-tracking .card-image {
+    box-shadow: 0 14px 30px #25262226;
+    transition-duration: .12s, .24s;
+  }
+
+  .practice-card .card-image::after {
+    content: "";
+    pointer-events: none;
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at var(--light-x, 50%) var(--light-y, 50%), #fff2b424, transparent 58%);
+    opacity: 0;
+    transition: opacity .24s ease;
+  }
+
+  .practice-card .is-tracking .card-image::after {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .project-link:hover .card-image img {
+    transform: none;
+  }
+}
