@@ -1,9 +1,9 @@
 .profile-cover {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(220px, 360px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, .75fr);
   align-items: center;
-  gap: clamp(32px, 7vw, 112px);
-  padding-block: clamp(52px, 7vw, 104px);
+  gap: clamp(24px, 5vw, 80px);
+  padding-block: clamp(64px, 8vw, 120px);
 }
 
 .profile-romanization {
@@ -47,13 +47,84 @@
   margin-top: 0;
 }
 
-.profile-photo {
-  display: block;
-  width: 100%;
-  height: auto;
-  aspect-ratio: 4 / 5;
-  object-fit: cover;
-  filter: saturate(.55);
+.cover-signature {
+  display: flex;
+  align-items: baseline;
+  justify-self: end;
+  padding-inline-end: .055em;
+  color: #55564d;
+  font-size: clamp(186px, 29vw, 420px);
+  font-weight: 800;
+  letter-spacing: -.12em;
+  line-height: .8;
+  user-select: none;
+}
+
+.cover-signature span {
+  width: .09em;
+  height: .09em;
+  background: var(--yellow);
+}
+
+@supports (-webkit-text-stroke: 1px black) {
+  .cover-signature {
+    color: transparent;
+    -webkit-text-stroke: 1px #77786a;
+  }
+}
+
+.opening-curtain { display: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .opening-curtain:not([hidden]) {
+    position: fixed;
+    z-index: 100;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .opening-curtain::before,
+  .opening-curtain::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    height: calc(50% + 1px);
+    background: #20211e;
+    animation: curtain-lift .75s cubic-bezier(.67,0,.25,1) .53s both;
+  }
+
+  .opening-curtain::before {
+    top: 0;
+    --curtain-offset: -102%;
+  }
+
+  .opening-curtain::after {
+    bottom: 0;
+    --curtain-offset: 102%;
+  }
+
+  .opening-mark.mark {
+    position: relative;
+    z-index: 1;
+    padding: 0 .1em 12px 0;
+    color: var(--paper);
+    border-bottom: 2px solid var(--yellow);
+    font-size: clamp(60px, 9vw, 104px);
+    animation: opening-mark .67s ease both;
+  }
+
+  @keyframes curtain-lift {
+    to { transform: translateY(var(--curtain-offset)); }
+  }
+
+  @keyframes opening-mark {
+    0% { opacity: 0; transform: translateY(8px); }
+    28%, 72% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; transform: translateY(-4px); }
+  }
 }
 
 .editorial-section {
@@ -239,17 +310,14 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .profile-cover { gap: 32px; }
+  .profile-cover { padding-block: 54px 62px; }
 
   .profile-cover h1 {
     margin-block: 10px 13px;
     font-size: clamp(58px, 15vw, 96px);
   }
 
-  .profile-photo {
-    aspect-ratio: 4 / 3;
-    object-position: center 31%;
-  }
+  .cover-signature { display: none; }
 
   .case-plate {
     grid-template-areas: "copy" "media";
