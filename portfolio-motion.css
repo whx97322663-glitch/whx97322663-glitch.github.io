@@ -2,16 +2,9 @@
   border-bottom: 1px solid var(--line);
 }
 
-.practice-section .section-heading {
-  align-items: baseline;
-}
-
-.practice-section .section-heading :is(h2, .text-link) {
-  margin-top: 0;
-}
-
 .practice-card .project-link {
   display: block;
+  position: relative;
 }
 
 .practice-card .card-image {

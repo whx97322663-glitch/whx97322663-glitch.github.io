@@ -26,7 +26,7 @@ if ("IntersectionObserver" in window) {
     }
   }, { threshold: .15 });
 
-  document.querySelectorAll("#interactive-practice .section-heading, #interactive-practice .project-card, #selected .project-card")
+  document.querySelectorAll(".profile-copy, .case-plate, .editorial-heading, .practice-spreads .project-card")
     .forEach(element => reveal.observe(element));
 }
 
@@ -41,7 +41,6 @@ projectGrid?.addEventListener("portfolio:filtered", () => {
   }
 });
 
-const clamp = value => Math.min(1, Math.max(0, value));
 for (const link of document.querySelectorAll(".practice-card .project-link")) {
   const cover = link.querySelector(".card-image");
 
@@ -56,9 +55,9 @@ for (const link of document.querySelectorAll(".practice-card .project-link")) {
     if (!finePointer.matches || motionPreference.matches || event.pointerType !== "mouse") return;
     // The link stays flat, keeping its hit area stable as the cover tilts.
     const rect = link.getBoundingClientRect();
-    const x = clamp((event.clientX - rect.left) / rect.width);
-    const y = (event.clientY - rect.top) / cover.offsetHeight;
-    if (y < 0 || y > 1) {
+    const x = (event.clientX - rect.left - cover.offsetLeft) / cover.offsetWidth;
+    const y = (event.clientY - rect.top - cover.offsetTop) / cover.offsetHeight;
+    if (x < 0 || x > 1 || y < 0 || y > 1) {
       resetTilt();
       return;
     }
